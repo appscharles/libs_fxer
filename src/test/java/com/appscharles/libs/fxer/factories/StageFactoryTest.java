@@ -7,6 +7,8 @@ import com.appscharles.libs.fxer.stages.FXStage;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Locale;
+
 /**
  * IDE Editor: IntelliJ IDEA
  * <p>
@@ -31,5 +33,53 @@ public class StageFactoryTest {
         AbstractControllerFX controllerFX = stage.getController();
         Assert.assertNotNull(controllerFX);
         Assert.assertTrue(stage.isShowing());
+    }
+
+    @Test
+    public void shouldDisplayLatinCharacters() throws FxerException, InterruptedException {
+        IFXStageFactory stageFactory = new FXStageFactory(
+                "/com/appscharles/libs/fxer/programs/viewer/ProgramView.fxml",
+                "com/appscharles/libs/fxer/programs/viewer/translations/Program");
+        stageFactory.addStylesheet("/com/appscharles/libs/fxer/programs/viewer/ProgramStyle.css");
+        stageFactory.setIcon("/com/appscharles/libs/fxer/programs/viewer/ProgramIcon.png");
+        stageFactory.setController(new ProgramControllerFX());
+        stageFactory.setTitle("MyApp");
+        FXStage stage = stageFactory.create();
+        stage.showFX();
+        final ProgramControllerFX controllerFX = stage.getController();
+        final String latin = controllerFX.getLatin();
+        System.out.println(latin);
+
+        Assert.assertEquals(latin,"ążćśęłńa");
+    }
+
+    @Test
+    public void shouldGetEnglishTranslations() throws FxerException {
+        Locale.setDefault(Locale.ENGLISH);
+        IFXStageFactory stageFactory = new FXStageFactory(
+                "/com/appscharles/libs/fxer/programs/viewer/ProgramView.fxml",
+                "com/appscharles/libs/fxer/programs/viewer/translations/Program");
+        stageFactory.addStylesheet("/com/appscharles/libs/fxer/programs/viewer/ProgramStyle.css");
+        stageFactory.setIcon("/com/appscharles/libs/fxer/programs/viewer/ProgramIcon.png");
+        stageFactory.setController(new ProgramControllerFX());
+        stageFactory.setTitle("MyApp");
+        FXStage stage = stageFactory.create();
+        stage.showFX();
+        Assert.assertTrue(stage.getTitle().equals("English program"));
+    }
+
+    @Test
+    public void shouldGetPolishTranslations() throws FxerException {
+        Locale.setDefault(new Locale("PL"));
+        IFXStageFactory stageFactory = new FXStageFactory(
+                "/com/appscharles/libs/fxer/programs/viewer/ProgramView.fxml",
+                "com/appscharles/libs/fxer/programs/viewer/translations/Program");
+        stageFactory.addStylesheet("/com/appscharles/libs/fxer/programs/viewer/ProgramStyle.css");
+        stageFactory.setIcon("/com/appscharles/libs/fxer/programs/viewer/ProgramIcon.png");
+        stageFactory.setController(new ProgramControllerFX());
+        stageFactory.setTitle("MyApp");
+        FXStage stage = stageFactory.create();
+        stage.showFX();
+        Assert.assertTrue(stage.getTitle().equals("Polish program"));
     }
 }

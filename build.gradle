@@ -5,10 +5,11 @@ plugins {
 }
 
 group 'com.appscharles.libs'
-version '1.0.0.0-dev0'
+version '1.0.0.0-dev1'
 
 sourceCompatibility = 1.8
 
+apply from: 'gradle/UTF8Encoder.gradle'
 apply from: 'gradle/BintrayPublisher.gradle'
 apply from: 'gradle/SourceSetter.gradle'
 

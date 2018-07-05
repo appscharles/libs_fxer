@@ -1,6 +1,7 @@
 package com.appscharles.libs.fxer.factories;
 
 import com.appscharles.libs.fxer.controllers.AbstractControllerFX;
+import com.appscharles.libs.fxer.controls.UTF8Control;
 import com.appscharles.libs.fxer.exceptions.FxerException;
 import com.appscharles.libs.fxer.runners.PlatformRunner;
 import com.appscharles.libs.fxer.stages.FXStage;
@@ -10,6 +11,7 @@ import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.concurrent.FutureTask;
 
 /**
@@ -28,11 +30,19 @@ public abstract class AbstractFXStageFactory implements IFXStageFactory {
     protected FXStage fXStage;
 
     public AbstractFXStageFactory(String view) throws FxerException {
+        this(view, (ResourceBundle) null);
+    }
+
+    public AbstractFXStageFactory(String view, ResourceBundle resourceBundle) throws FxerException {
         this.view = view;
         this.resourceStylesheetPaths = new ArrayList<>();
         PlatformImpl.startup(()->{});
-        this.fXMLLoader = new FXMLLoader(getClass().getResource(this.view));
+        this.fXMLLoader = new FXMLLoader(getClass().getResource(this.view), resourceBundle);
         initFXStage();
+    }
+
+    public AbstractFXStageFactory(String view, String resource) throws FxerException {
+        this(view, ResourceBundle.getBundle(resource, new UTF8Control()));
     }
 
     @Override

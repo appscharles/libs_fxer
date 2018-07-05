@@ -5,6 +5,7 @@ import com.appscharles.libs.fxer.runners.PlatformRunner;
 import com.appscharles.libs.fxer.stages.FXStage;
 import javafx.scene.Scene;
 
+import java.util.ResourceBundle;
 import java.util.concurrent.FutureTask;
 
 /**
@@ -20,6 +21,14 @@ public class FXStageFactory extends AbstractFXStageFactory {
 
     public FXStageFactory(String view) throws FxerException {
         super(view);
+    }
+
+    public FXStageFactory(String view, ResourceBundle resourceBundle) throws FxerException {
+        super(view, resourceBundle);
+    }
+
+    public FXStageFactory(String view, String resource) throws FxerException {
+        super(view, resource);
     }
 
     @Override
