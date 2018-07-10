@@ -12,4 +12,5 @@ package com.appscharles.libs.fxer.stages;
 public interface IStageControllable {
 
     <T> T getController();
+
 }

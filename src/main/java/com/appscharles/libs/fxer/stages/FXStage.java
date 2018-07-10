@@ -119,4 +119,5 @@ public class FXStage extends Stage implements IStageControllable {
     public <T> T getController() {
         return this.fxmlLoader.getController();
     }
+
 }
