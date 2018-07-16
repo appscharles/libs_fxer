@@ -5,8 +5,6 @@ import com.appscharles.libs.fxer.runners.PlatformRunner;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 
-import java.util.concurrent.FutureTask;
-
 /**
  * The type Fx stage.
  */
@@ -25,10 +23,9 @@ public class FXStage extends Stage implements IStageControllable {
      * @throws FxerException the fxer exception
      */
     public void showFX() throws FxerException {
-        PlatformRunner.runLater(new FutureTask(()->{
+        PlatformRunner.runAndWait(()->{
             super.show();
-            return null;
-        }));
+        });
     }
 
     /**
@@ -37,10 +34,9 @@ public class FXStage extends Stage implements IStageControllable {
      * @throws FxerException the fxer exception
      */
     public void showAndWaitFX() throws FxerException {
-        PlatformRunner.runLater(new FutureTask(()->{
+        PlatformRunner.runAndWait(()->{
             super.showAndWait();
-            return null;
-        }));
+        });
     }
 
     /**
@@ -49,10 +45,9 @@ public class FXStage extends Stage implements IStageControllable {
      * @throws FxerException the fxer exception
      */
     public void toFrontFX() throws FxerException {
-        PlatformRunner.runLater(new FutureTask(()->{
+        PlatformRunner.runAndWait(()->{
             super.toFront();
-            return null;
-        }));
+        });
     }
 
     /**
@@ -61,10 +56,9 @@ public class FXStage extends Stage implements IStageControllable {
      * @throws FxerException the fxer exception
      */
     public void toBackFX() throws FxerException {
-        PlatformRunner.runLater(new FutureTask(()->{
+        PlatformRunner.runAndWait(()->{
             super.toBack();
-            return null;
-        }));
+        });
     }
 
     /**
@@ -73,10 +67,9 @@ public class FXStage extends Stage implements IStageControllable {
      * @throws FxerException the fxer exception
      */
     public void closeFX() throws FxerException {
-        PlatformRunner.runLater(new FutureTask(()->{
+        PlatformRunner.runAndWait(()->{
             super.close();
-            return null;
-        }));
+        });
     }
 
     /**
@@ -85,10 +78,9 @@ public class FXStage extends Stage implements IStageControllable {
      * @throws FxerException the fxer exception
      */
     public void sizeToSceneFX() throws FxerException {
-        PlatformRunner.runLater(new FutureTask(()->{
+        PlatformRunner.runAndWait(()->{
             super.sizeToScene();
-            return null;
-        }));
+        });
     }
 
     /**
@@ -97,10 +89,9 @@ public class FXStage extends Stage implements IStageControllable {
      * @throws FxerException the fxer exception
      */
     public void centerOnScreenFX() throws FxerException {
-        PlatformRunner.runLater(new FutureTask(()->{
+        PlatformRunner.runAndWait(()->{
             super.centerOnScreen();
-            return null;
-        }));
+        });
     }
 
     /**
@@ -109,10 +100,9 @@ public class FXStage extends Stage implements IStageControllable {
      * @throws FxerException the fxer exception
      */
     public void hideFX() throws FxerException {
-        PlatformRunner.runLater(new FutureTask(()->{
+        PlatformRunner.runAndWait(()->{
             super.hide();
-            return null;
-        }));
+        });
     }
 
     @Override

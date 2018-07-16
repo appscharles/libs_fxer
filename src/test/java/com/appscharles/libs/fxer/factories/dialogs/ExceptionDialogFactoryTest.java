@@ -11,6 +11,4 @@ package com.appscharles.libs.fxer.factories.dialogs;
  */
 public class ExceptionDialogFactoryTest {
 
-
-
 }

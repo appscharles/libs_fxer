@@ -1,32 +1,31 @@
 package com.appscharles.libs.fxer.runners;
 
 import com.appscharles.libs.fxer.exceptions.FxerException;
-import javafx.application.Platform;
-
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.FutureTask;
+import com.appscharles.libs.fxer.exceptions.ThrowingRunnable;
+import com.sun.javafx.application.PlatformImpl;
+import javafx.beans.property.SimpleObjectProperty;
 
 /**
  * The type Platform runner.
  */
 public class PlatformRunner {
 
-    /**
-     * Run later object.
-     *
-     * @param futureTask the future task
-     * @return the object
-     * @throws FxerException the fxer exception
-     */
-    public static Object runLater(final FutureTask futureTask) throws FxerException {
-        if (Platform.isFxApplicationThread()){
-            return futureTask;
-        }
-        Platform.runLater(futureTask);
-        try {
-            return futureTask.get();
-        } catch (InterruptedException | ExecutionException e) {
-            throw new FxerException(e);
+
+    public static void runAndWait(ThrowingRunnable runnable) throws FxerException {
+        if (PlatformImpl.isFxApplicationThread()){
+            runnable.accept();
+        } else {
+            SimpleObjectProperty<FxerException> exception = new SimpleObjectProperty();
+            PlatformImpl.runAndWait(()->{
+                try {
+                    runnable.accept();
+                } catch (FxerException e) {
+                    exception.setValue(e);
+                }
+            });
+            if (exception.get() != null){
+                throw new FxerException(exception.get());
+            }
         }
     }
 }

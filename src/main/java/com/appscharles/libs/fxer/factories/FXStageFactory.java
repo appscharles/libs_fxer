@@ -5,8 +5,8 @@ import com.appscharles.libs.fxer.runners.PlatformRunner;
 import com.appscharles.libs.fxer.stages.FXStage;
 import javafx.scene.Scene;
 
+import java.io.IOException;
 import java.util.ResourceBundle;
-import java.util.concurrent.FutureTask;
 
 /**
  * IDE Editor: IntelliJ IDEA
@@ -33,13 +33,17 @@ public class FXStageFactory extends AbstractFXStageFactory {
 
     @Override
     public FXStage create() throws FxerException {
-        return (FXStage) PlatformRunner.runLater(new FutureTask(() -> {
-            Scene scene = new Scene(this.fXMLLoader.load());
-            scene.getStylesheets().addAll(this.resourceStylesheetPaths);
-            this.fXStage.setTitle(this.title);
-            this.fXStage.setScene(scene);
-            setControllerEvents();
-            return this.fXStage;
-        }));
+        PlatformRunner.runAndWait(() -> {
+            try {
+                Scene scene = new Scene(this.fXMLLoader.load());
+                scene.getStylesheets().addAll(this.resourceStylesheetPaths);
+                this.fXStage.setTitle(this.title);
+                this.fXStage.setScene(scene);
+                setControllerEvents();
+            } catch (IOException e) {
+                throw new FxerException(e);
+            }
+        });
+        return this.fXStage;
     }
 }

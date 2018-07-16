@@ -25,6 +25,8 @@ public class ProgramControllerFX extends AbstractControllerFX {
 
     private String latin;
 
+    private String result;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("initialize");
@@ -39,9 +41,14 @@ public class ProgramControllerFX extends AbstractControllerFX {
     @Override
     public void onShown(WindowEvent event) {
         System.out.println("on shown");
+        this.result = "result";
     }
 
     public String getLatin() {
         return latin;
+    }
+
+    public String getResult() {
+        return this.result;
     }
 }

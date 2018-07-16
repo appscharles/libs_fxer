@@ -72,10 +72,9 @@ public abstract class AbstractFXStageFactory implements IFXStageFactory {
     }
 
     private void initFXStage() throws FxerException {
-        PlatformRunner.runLater(new FutureTask(()->{
+        PlatformRunner.runAndWait(()->{
             this.fXStage = new FXStage(this.fXMLLoader);
-            return null;
-        }));
+        });
     }
 
     protected void setControllerEvents() {
