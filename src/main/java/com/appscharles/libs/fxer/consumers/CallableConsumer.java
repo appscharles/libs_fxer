@@ -10,6 +10,6 @@ package com.appscharles.libs.fxer.consumers;
  * @author Karol Golec karol.itgolo@gmail.com
  */
 @FunctionalInterface
-public interface CallableConsumer<T, R> {
-    R accept(T t);
+public interface CallableConsumer<T, S,  R> {
+    R accept(T t, S s);
 }

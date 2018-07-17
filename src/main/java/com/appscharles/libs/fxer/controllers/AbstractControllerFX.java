@@ -7,16 +7,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * IDE Editor: IntelliJ IDEA
- * <p>
- * Date: 03.07.2018
- * Time: 14:37
- * Project name: fxer
- *
- * @author Karol Golec karol.itgolo@gmail.com
+ * The type Abstract controller fx.
  */
 public abstract class AbstractControllerFX implements IControllerFX, IShownableFX, IStagableFX {
 
+    /**
+     * The F x stage.
+     */
     protected FXStage fXStage;
 
     @Override
@@ -32,5 +29,10 @@ public abstract class AbstractControllerFX implements IControllerFX, IShownableF
     @Override
     public void setFXStage(FXStage fXStage) {
         this.fXStage = fXStage;
+    }
+
+    @Override
+    public FXStage getFXStage() {
+        return this.fXStage;
     }
 }

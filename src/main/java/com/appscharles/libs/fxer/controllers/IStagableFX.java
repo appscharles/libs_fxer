@@ -14,4 +14,6 @@ import com.appscharles.libs.fxer.stages.FXStage;
 public interface IStagableFX {
 
     void setFXStage(FXStage fxStage);
+
+    FXStage getFXStage();
 }

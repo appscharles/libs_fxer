@@ -14,7 +14,7 @@ import javafx.util.Callback;
 public class UniversalTableCell<S, T> extends TableCell<S, T> {
 
 
-    private CallableConsumer<T, Node> onUpdate;
+    private CallableConsumer<T, S, Node> onUpdate;
 
     public UniversalTableCell() {
     }
@@ -24,7 +24,7 @@ public class UniversalTableCell<S, T> extends TableCell<S, T> {
      *
      * @param onUpdate the on update
      */
-    public UniversalTableCell(CallableConsumer<T, Node> onUpdate) {
+    public UniversalTableCell(CallableConsumer<T, S, Node> onUpdate) {
 
         this.onUpdate = onUpdate;
     }
@@ -45,7 +45,7 @@ public class UniversalTableCell<S, T> extends TableCell<S, T> {
      * @param onUpdate the on update
      * @return the callback
      */
-    public <S> Callback<TableColumn<S, T>, TableCell<S, T>> forTableColumn(CallableConsumer<T, Node> onUpdate) {
+    public <S> Callback<TableColumn<S, T>, TableCell<S, T>> forTableColumn(CallableConsumer<T, S, Node> onUpdate) {
         return param -> new UniversalTableCell<>(onUpdate);
     }
 
@@ -56,7 +56,7 @@ public class UniversalTableCell<S, T> extends TableCell<S, T> {
         if (empty) {
             setGraphic(null);
         } else {
-            setGraphic(this.onUpdate.accept(item));
+            setGraphic(this.onUpdate.accept(item, getCurrentItem()));
         }
     }
 }
