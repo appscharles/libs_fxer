@@ -8,7 +8,7 @@ import com.appscharles.libs.fxer.stages.FXStage;
 /**
  * The interface Ifx stage factory.
  */
-public interface IFXStageFactory extends IStageIconable, IStageStylable, IGetStagableFX, IStageParentConsumable, IOnCreateStageConsumable {
+public interface IFXStageFactory extends IStageIconable, IStageStylable, IGetStagableFX {
 
     /**
      * Create fx stage.
