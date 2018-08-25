@@ -35,6 +35,7 @@ public class FxViewFactory {
      */
     public FxViewFactory(String resourceView, String resourceBundle, AbstractViewControllerFX controller, FXStage parentFXStage) {
         this(resourceView, ResourceBundle.getBundle(resourceBundle, new UTF8Control()), controller, parentFXStage);
+
     }
 
     /**
