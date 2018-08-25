@@ -1,5 +1,6 @@
 package com.appscharles.libs.fxer.factories;
 
+import com.appscharles.libs.fxer.controllers.IGetStagableFX;
 import com.appscharles.libs.fxer.controllers.ISetStagableFX;
 import com.appscharles.libs.fxer.exceptions.FxerException;
 import com.appscharles.libs.fxer.stages.FXStage;
@@ -7,7 +8,7 @@ import com.appscharles.libs.fxer.stages.FXStage;
 /**
  * The interface Ifx stage factory.
  */
-public interface IFXStageFactory extends IStageIconable, IStageStylable {
+public interface IFXStageFactory extends IStageIconable, IStageStylable, IGetStagableFX, IStageParentConsumable, IOnCreateStageConsumable {
 
     /**
      * Create fx stage.

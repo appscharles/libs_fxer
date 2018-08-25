@@ -3,6 +3,7 @@ package com.appscharles.libs.fxer.factories;
 import com.appscharles.libs.fxer.exceptions.FxerException;
 import com.appscharles.libs.fxer.runners.ThreadPlatform;
 import com.appscharles.libs.fxer.stages.FXStage;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 import java.io.IOException;
@@ -35,10 +36,17 @@ public class FXStageFactory extends AbstractFXStageFactory {
     public FXStage create() throws FxerException {
         new ThreadPlatform<FxerException>().runAndWait(()->{
             try {
-                Scene scene = new Scene(this.fXMLLoader.load());
+                Parent parent = this.fXMLLoader.load();
+                if (this.parentConsumer != null){
+                    this.parentConsumer.accept(parent);
+                }
+                Scene scene = new Scene(parent);
                 scene.getStylesheets().addAll(this.resourceStylesheetPaths);
                 this.fXStage.setTitle(this.title);
                 this.fXStage.setScene(scene);
+                if (this.onCreateConsumer != null){
+                    this.onCreateConsumer.accept(this.fXStage);
+                }
                 setControllerEvents();
             } catch (IOException e) {
                 throw new FxerException(e);

@@ -4,10 +4,12 @@ import com.appscharles.libs.fxer.controllers.ISetStagableFX;
 import com.appscharles.libs.fxer.controllers.IStageShownableFX;
 import com.appscharles.libs.fxer.controls.UTF8Control;
 import com.appscharles.libs.fxer.exceptions.FxerException;
+import com.appscharles.libs.fxer.exceptions.ThrowingOneConsumer;
 import com.appscharles.libs.fxer.runners.ThreadPlatform;
 import com.appscharles.libs.fxer.stages.FXStage;
 import com.sun.javafx.application.PlatformImpl;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,10 @@ public abstract class AbstractFXStageFactory implements IFXStageFactory {
     protected FXMLLoader fXMLLoader;
 
     protected FXStage fXStage;
+
+    protected ThrowingOneConsumer<Parent, FxerException> parentConsumer;
+
+    protected ThrowingOneConsumer<FXStage, FxerException> onCreateConsumer;
 
     public AbstractFXStageFactory(String view) throws FxerException {
         this(view, (ResourceBundle) null);
@@ -86,5 +92,22 @@ public abstract class AbstractFXStageFactory implements IFXStageFactory {
                 }
             }));
         }
+    }
+
+    @Override
+    public FXStage getFXStage() {
+        return this.fXStage;
+    }
+
+    @Override
+    public <T> T setParentConsumer(ThrowingOneConsumer<Parent, FxerException> parentConsumer) {
+        this.parentConsumer = parentConsumer;
+        return (T)this;
+    }
+
+    @Override
+    public <T> T setOnCreateConsumer(ThrowingOneConsumer<FXStage, FxerException> onCreateConsumer) {
+        this.onCreateConsumer = onCreateConsumer;
+        return (T) this;
     }
 }

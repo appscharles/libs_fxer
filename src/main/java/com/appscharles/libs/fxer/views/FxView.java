@@ -68,8 +68,8 @@ public class FxView {
         showing.addListener((args, oldVal, newVal)->{
             if (newVal == null){
                 ((IClosableFX)this.fXMLLoader.getController()).onClose();
-            } else {
-                if (newVal == false){
+            } else if (oldVal != null) {
+                if (newVal == false && oldVal == true){
                     ((IClosableFX)this.fXMLLoader.getController()).onClose();
                 }
             }
