@@ -7,7 +7,7 @@ import com.appscharles.libs.fxer.stages.FXStage;
 /**
  * The interface Ifx stage factory.
  */
-public interface IFXStageFactory {
+public interface IFXStageFactory extends IStageIconable, IStageStylable {
 
     /**
      * Create fx stage.
@@ -17,12 +17,6 @@ public interface IFXStageFactory {
      */
     FXStage create() throws FxerException;
 
-    /**
-     * Add stylesheet.
-     *
-     * @param resourcePath the resource path
-     */
-    void addStylesheet(String resourcePath);
 
     /**
      * Sets title.
@@ -37,12 +31,4 @@ public interface IFXStageFactory {
      * @param controller the controller
      */
     void setController(IStagableFX controller);
-
-    /**
-     * Sets icon.
-     *
-     * @param resourcePath the resource path
-     * @throws FxerException the fxer exception
-     */
-    void setIcon(String resourcePath) throws FxerException;
 }

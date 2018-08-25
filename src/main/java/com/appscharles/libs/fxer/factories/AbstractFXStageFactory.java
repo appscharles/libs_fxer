@@ -66,8 +66,9 @@ public abstract class AbstractFXStageFactory implements IFXStageFactory {
     }
 
     @Override
-    public void setIcon(String resourcePath) throws FxerException {
+    public <T> T setIcon(String resourcePath) throws FxerException {
         this.fXStage.setIcon(resourcePath);
+        return (T) this;
     }
 
     private void initFXStage() throws FxerException {
