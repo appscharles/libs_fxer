@@ -1,7 +1,7 @@
 package com.appscharles.libs.fxer.factories;
 
 import com.appscharles.libs.fxer.exceptions.FxerException;
-import com.appscharles.libs.fxer.runners.PlatformRunner;
+import com.appscharles.libs.fxer.runners.ThreadPlatform;
 import com.appscharles.libs.fxer.stages.FXStage;
 import javafx.scene.Scene;
 
@@ -33,7 +33,7 @@ public class FXStageFactory extends AbstractFXStageFactory {
 
     @Override
     public FXStage create() throws FxerException {
-        PlatformRunner.runAndWait(() -> {
+        new ThreadPlatform<FxerException>().runAndWait(()->{
             try {
                 Scene scene = new Scene(this.fXMLLoader.load());
                 scene.getStylesheets().addAll(this.resourceStylesheetPaths);

@@ -1,6 +1,6 @@
 package com.appscharles.libs.fxer.controllers;
 
-import javafx.stage.WindowEvent;
+import com.appscharles.libs.fxer.views.FxView;
 
 /**
  * IDE Editor: IntelliJ IDEA
@@ -11,7 +11,9 @@ import javafx.stage.WindowEvent;
  *
  * @author Karol Golec karol.itgolo@gmail.com
  */
-public interface IShownableFX {
+public interface IViewableFX {
 
-    void onShown(WindowEvent event);
+    void setFXView(FxView fxView);
+
+    FxView getFXView();
 }

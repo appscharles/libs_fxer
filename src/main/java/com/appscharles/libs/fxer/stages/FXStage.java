@@ -1,8 +1,9 @@
 package com.appscharles.libs.fxer.stages;
 
 import com.appscharles.libs.fxer.exceptions.FxerException;
-import com.appscharles.libs.fxer.runners.PlatformRunner;
+import com.appscharles.libs.fxer.runners.ThreadPlatform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -12,6 +13,11 @@ public class FXStage extends Stage implements IStageControllable {
 
     private FXMLLoader fxmlLoader;
 
+    /**
+     * Instantiates a new Fx stage.
+     *
+     * @param fxmlLoader the fxml loader
+     */
     public FXStage(FXMLLoader fxmlLoader) {
         super();
         this.fxmlLoader = fxmlLoader;
@@ -23,7 +29,7 @@ public class FXStage extends Stage implements IStageControllable {
      * @throws FxerException the fxer exception
      */
     public void showFX() throws FxerException {
-        PlatformRunner.runAndWait(()->{
+        new ThreadPlatform<FxerException>().runAndWait(()->{
             super.show();
         });
     }
@@ -34,7 +40,7 @@ public class FXStage extends Stage implements IStageControllable {
      * @throws FxerException the fxer exception
      */
     public void showAndWaitFX() throws FxerException {
-        PlatformRunner.runAndWait(()->{
+        new ThreadPlatform<FxerException>().runAndWait(()->{
             super.showAndWait();
         });
     }
@@ -45,7 +51,7 @@ public class FXStage extends Stage implements IStageControllable {
      * @throws FxerException the fxer exception
      */
     public void toFrontFX() throws FxerException {
-        PlatformRunner.runAndWait(()->{
+        new ThreadPlatform<FxerException>().runAndWait(()->{
             super.toFront();
         });
     }
@@ -56,7 +62,7 @@ public class FXStage extends Stage implements IStageControllable {
      * @throws FxerException the fxer exception
      */
     public void toBackFX() throws FxerException {
-        PlatformRunner.runAndWait(()->{
+        new ThreadPlatform<FxerException>().runAndWait(()->{
             super.toBack();
         });
     }
@@ -67,7 +73,7 @@ public class FXStage extends Stage implements IStageControllable {
      * @throws FxerException the fxer exception
      */
     public void closeFX() throws FxerException {
-        PlatformRunner.runAndWait(()->{
+        new ThreadPlatform<FxerException>().runAndWait(()->{
             super.close();
         });
     }
@@ -78,7 +84,7 @@ public class FXStage extends Stage implements IStageControllable {
      * @throws FxerException the fxer exception
      */
     public void sizeToSceneFX() throws FxerException {
-        PlatformRunner.runAndWait(()->{
+        new ThreadPlatform<FxerException>().runAndWait(()->{
             super.sizeToScene();
         });
     }
@@ -89,7 +95,7 @@ public class FXStage extends Stage implements IStageControllable {
      * @throws FxerException the fxer exception
      */
     public void centerOnScreenFX() throws FxerException {
-        PlatformRunner.runAndWait(()->{
+        new ThreadPlatform<FxerException>().runAndWait(()->{
             super.centerOnScreen();
         });
     }
@@ -100,7 +106,7 @@ public class FXStage extends Stage implements IStageControllable {
      * @throws FxerException the fxer exception
      */
     public void hideFX() throws FxerException {
-        PlatformRunner.runAndWait(()->{
+        new ThreadPlatform<FxerException>().runAndWait(()->{
             super.hide();
         });
     }
@@ -108,6 +114,18 @@ public class FXStage extends Stage implements IStageControllable {
     @Override
     public <T> T getController() {
         return this.fxmlLoader.getController();
+    }
+
+    /**
+     * Sets icon.
+     *
+     * @param resourcePath the resource path
+     * @throws FxerException the fxer exception
+     */
+    public void setIcon(String resourcePath) throws FxerException {
+        new ThreadPlatform<FxerException>().runAndWait(()->{
+            this.getIcons().add(new Image(getClass().getResourceAsStream(resourcePath)));
+        });
     }
 
 }

@@ -1,18 +1,17 @@
 package com.appscharles.libs.fxer.factories;
 
-import com.appscharles.libs.fxer.controllers.AbstractControllerFX;
+import com.appscharles.libs.fxer.controllers.IStagableFX;
+import com.appscharles.libs.fxer.controllers.IStageShownableFX;
 import com.appscharles.libs.fxer.controls.UTF8Control;
 import com.appscharles.libs.fxer.exceptions.FxerException;
-import com.appscharles.libs.fxer.runners.PlatformRunner;
+import com.appscharles.libs.fxer.runners.ThreadPlatform;
 import com.appscharles.libs.fxer.stages.FXStage;
 import com.sun.javafx.application.PlatformImpl;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.concurrent.FutureTask;
 
 /**
  * The type Abstract stage factory.
@@ -41,8 +40,8 @@ public abstract class AbstractFXStageFactory implements IFXStageFactory {
         initFXStage();
     }
 
-    public AbstractFXStageFactory(String view, String resource) throws FxerException {
-        this(view, ResourceBundle.getBundle(resource, new UTF8Control()));
+    public AbstractFXStageFactory(String view, String resourceBundle) throws FxerException {
+        this(view, ResourceBundle.getBundle(resourceBundle, new UTF8Control()));
     }
 
     @Override
@@ -61,27 +60,29 @@ public abstract class AbstractFXStageFactory implements IFXStageFactory {
     }
 
     @Override
-    public void setController(AbstractControllerFX controller) {
+    public void setController(IStagableFX controller) {
         controller.setFXStage(this.fXStage);
         this.fXMLLoader.setController(controller);
     }
 
     @Override
     public void setIcon(String resourcePath) throws FxerException {
-        this.fXStage.getIcons().add(new Image(getClass().getResourceAsStream(resourcePath)));
+        this.fXStage.setIcon(resourcePath);
     }
 
     private void initFXStage() throws FxerException {
-        PlatformRunner.runAndWait(()->{
-            this.fXStage = new FXStage(this.fXMLLoader);
-        });
+      new ThreadPlatform<FxerException>().runAndWait(()->{
+          this.fXStage = new FXStage(this.fXMLLoader);
+      });
     }
 
     protected void setControllerEvents() {
-        AbstractControllerFX controller = this.fXStage.getController();
+        IStagableFX controller = this.fXStage.getController();
         if (controller != null) {
             this.fXStage.setOnShown((event -> {
-                controller.onShown(event);
+                if (controller instanceof IStageShownableFX){
+                    ((IStageShownableFX)controller).onShown(event);
+                }
             }));
         }
     }

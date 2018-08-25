@@ -1,6 +1,6 @@
 package com.appscharles.libs.fxer.factories;
 
-import com.appscharles.libs.fxer.controllers.AbstractControllerFX;
+import com.appscharles.libs.fxer.controllers.IStagableFX;
 import com.appscharles.libs.fxer.exceptions.FxerException;
 import com.appscharles.libs.fxer.stages.FXStage;
 
@@ -21,13 +21,28 @@ public interface IFXStageFactory {
      * Add stylesheet.
      *
      * @param resourcePath the resource path
-     * @throws FxerException the fxer exception
      */
     void addStylesheet(String resourcePath);
 
+    /**
+     * Sets title.
+     *
+     * @param title the title
+     */
     void setTitle(String title);
 
-    void setController(AbstractControllerFX controller);
+    /**
+     * Sets controller.
+     *
+     * @param controller the controller
+     */
+    void setController(IStagableFX controller);
 
+    /**
+     * Sets icon.
+     *
+     * @param resourcePath the resource path
+     * @throws FxerException the fxer exception
+     */
     void setIcon(String resourcePath) throws FxerException;
 }

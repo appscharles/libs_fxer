@@ -1,6 +1,6 @@
 package com.appscharles.libs.fxer.programs.viewer;
 
-import com.appscharles.libs.fxer.controllers.AbstractControllerFX;
+import com.appscharles.libs.fxer.controllers.AbstractStageControllerFX;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  *
  * @author Karol Golec karol.itgolo@gmail.com
  */
-public class ProgramControllerFX extends AbstractControllerFX {
+public class ProgramControllerFX extends AbstractStageControllerFX {
 
     @FXML
     private TextField username;

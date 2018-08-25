@@ -1,6 +1,6 @@
 package com.appscharles.libs.fxer.programs.stager;
 
-import com.appscharles.libs.fxer.controllers.AbstractControllerFX;
+import com.appscharles.libs.fxer.controllers.AbstractStageControllerFX;
 import com.appscharles.libs.fxer.exceptions.FxerException;
 import com.appscharles.libs.fxer.factories.FXStageFactory;
 import com.appscharles.libs.fxer.factories.IFXStageFactory;
@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
  *
  * @author Karol Golec karol.itgolo@gmail.com
  */
-public class StagerController extends AbstractControllerFX {
+public class StagerController extends AbstractStageControllerFX {
 
     private String result;
 

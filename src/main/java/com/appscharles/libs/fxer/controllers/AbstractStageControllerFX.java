@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 /**
  * The type Abstract controller fx.
  */
-public abstract class AbstractControllerFX implements IControllerFX, IShownableFX, IStagableFX {
+public abstract class AbstractStageControllerFX implements IControllerFX, IStageShownableFX, IStagableFX, IClosableFX {
 
     /**
      * The F x stage.
@@ -29,10 +29,20 @@ public abstract class AbstractControllerFX implements IControllerFX, IShownableF
     @Override
     public void setFXStage(FXStage fXStage) {
         this.fXStage = fXStage;
+        this.fXStage.showingProperty().addListener((args, oldVal, newVal)->{
+            if (newVal == false){
+                onClose();
+            }
+        });
     }
 
     @Override
     public FXStage getFXStage() {
         return this.fXStage;
+    }
+
+    @Override
+    public void onClose() {
+
     }
 }

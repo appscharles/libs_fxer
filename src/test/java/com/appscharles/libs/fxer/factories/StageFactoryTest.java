@@ -1,6 +1,6 @@
 package com.appscharles.libs.fxer.factories;
 
-import com.appscharles.libs.fxer.controllers.AbstractControllerFX;
+import com.appscharles.libs.fxer.controllers.AbstractStageControllerFX;
 import com.appscharles.libs.fxer.exceptions.FxerException;
 import com.appscharles.libs.fxer.programs.viewer.ProgramControllerFX;
 import com.appscharles.libs.fxer.stages.FXStage;
@@ -30,7 +30,7 @@ public class StageFactoryTest {
         FXStage stage = stageFactory.create();
         stage.showFX();
 
-        AbstractControllerFX controllerFX = stage.getController();
+        AbstractStageControllerFX controllerFX = stage.getController();
         Assert.assertNotNull(controllerFX);
         Assert.assertTrue(stage.isShowing());
     }
