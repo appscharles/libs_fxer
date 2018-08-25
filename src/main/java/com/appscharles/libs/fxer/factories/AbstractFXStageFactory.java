@@ -1,6 +1,6 @@
 package com.appscharles.libs.fxer.factories;
 
-import com.appscharles.libs.fxer.controllers.IStagableFX;
+import com.appscharles.libs.fxer.controllers.ISetStagableFX;
 import com.appscharles.libs.fxer.controllers.IStageShownableFX;
 import com.appscharles.libs.fxer.controls.UTF8Control;
 import com.appscharles.libs.fxer.exceptions.FxerException;
@@ -60,7 +60,7 @@ public abstract class AbstractFXStageFactory implements IFXStageFactory {
     }
 
     @Override
-    public void setController(IStagableFX controller) {
+    public void setController(ISetStagableFX controller) {
         controller.setFXStage(this.fXStage);
         this.fXMLLoader.setController(controller);
     }
@@ -78,7 +78,7 @@ public abstract class AbstractFXStageFactory implements IFXStageFactory {
     }
 
     protected void setControllerEvents() {
-        IStagableFX controller = this.fXStage.getController();
+        ISetStagableFX controller = this.fXStage.getController();
         if (controller != null) {
             this.fXStage.setOnShown((event -> {
                 if (controller instanceof IStageShownableFX){

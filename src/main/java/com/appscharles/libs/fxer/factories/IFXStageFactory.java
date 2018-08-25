@@ -1,6 +1,6 @@
 package com.appscharles.libs.fxer.factories;
 
-import com.appscharles.libs.fxer.controllers.IStagableFX;
+import com.appscharles.libs.fxer.controllers.ISetStagableFX;
 import com.appscharles.libs.fxer.exceptions.FxerException;
 import com.appscharles.libs.fxer.stages.FXStage;
 
@@ -30,5 +30,5 @@ public interface IFXStageFactory extends IStageIconable, IStageStylable {
      *
      * @param controller the controller
      */
-    void setController(IStagableFX controller);
+    void setController(ISetStagableFX controller);
 }

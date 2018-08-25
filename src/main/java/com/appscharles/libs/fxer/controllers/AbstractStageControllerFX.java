@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 /**
  * The type Abstract controller fx.
  */
-public abstract class AbstractStageControllerFX implements IControllerFX, IStageShownableFX, IStagableFX, IClosableFX {
+public abstract class AbstractStageControllerFX implements IControllerFX, IStageShownableFX, IGetStagableFX,ISetStagableFX, IClosableFX {
 
     /**
      * The F x stage.

@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 /**
  * The type Abstract view controller fx.
  */
-public abstract class AbstractViewControllerFX implements IControllerFX, IViewShownableFX, IStagableFX, IViewableFX, IClosableFX {
+public abstract class AbstractViewControllerFX implements IControllerFX, IViewShownableFX, IGetStagableFX, ISetStagableFX, IViewableFX, IClosableFX {
 
     /**
      * The Fx view.

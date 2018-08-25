@@ -1,7 +1,7 @@
 package com.appscharles.libs.fxer.views;
 
 import com.appscharles.libs.fxer.controllers.IClosableFX;
-import com.appscharles.libs.fxer.controllers.IStagableFX;
+import com.appscharles.libs.fxer.controllers.ISetStagableFX;
 import com.appscharles.libs.fxer.controllers.IViewShownableFX;
 import com.appscharles.libs.fxer.controllers.IViewableFX;
 import com.appscharles.libs.fxer.stages.FXStage;
@@ -55,7 +55,7 @@ public class FxView {
      */
     public Parent createView() throws IOException {
         ((IViewableFX)this.fXMLLoader.getController()).setFXView(this);
-        ((IStagableFX)this.fXMLLoader.getController()).setFXStage(this.fXStage);
+        ((ISetStagableFX)this.fXMLLoader.getController()).setFXStage(this.fXStage);
         Parent parent = this.fXMLLoader.load();
         parent.getStylesheets().addAll(this.resourceStylesheets);
         Val<Boolean> showing = Val.flatMap(parent.sceneProperty(), Scene::windowProperty)

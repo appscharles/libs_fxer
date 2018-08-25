@@ -11,9 +11,7 @@ import com.appscharles.libs.fxer.stages.FXStage;
  *
  * @author Karol Golec karol.itgolo@gmail.com
  */
-public interface IStagableFX {
-
-    void setFXStage(FXStage fxStage);
+public interface IGetStagableFX {
 
     FXStage getFXStage();
 }
