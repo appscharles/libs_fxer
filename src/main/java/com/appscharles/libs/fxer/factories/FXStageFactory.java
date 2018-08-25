@@ -37,16 +37,10 @@ public class FXStageFactory extends AbstractFXStageFactory {
         new ThreadPlatform<FxerException>().runAndWait(()->{
             try {
                 Parent parent = this.fXMLLoader.load();
-                if (this.parentConsumer != null){
-                    this.parentConsumer.accept(parent);
-                }
                 Scene scene = new Scene(parent);
                 scene.getStylesheets().addAll(this.resourceStylesheetPaths);
                 this.fXStage.setTitle(this.title);
                 this.fXStage.setScene(scene);
-                if (this.onCreateConsumer != null){
-                    this.onCreateConsumer.accept(this.fXStage);
-                }
                 setControllerEvents();
             } catch (IOException e) {
                 throw new FxerException(e);
