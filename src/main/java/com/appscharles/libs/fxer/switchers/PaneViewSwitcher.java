@@ -12,6 +12,8 @@ public class PaneViewSwitcher {
 
     private Pane pane;
 
+    private Boolean resize;
+
     /**
      * Instantiates a new Pane view switcher.
      *
@@ -19,7 +21,7 @@ public class PaneViewSwitcher {
      */
     public PaneViewSwitcher(Pane pane) {
         this.pane = pane;
-
+        this.resize = false;
     }
 
     /**
@@ -37,7 +39,19 @@ public class PaneViewSwitcher {
         this.pane.heightProperty().addListener((args, oldVal, newVal)->{
             region.setPrefHeight(newVal.doubleValue());
         });
-        region.setPrefWidth(this.pane.getWidth());
-        region.setPrefHeight(this.pane.getHeight());
+        if (this.resize){
+            region.setPrefWidth(this.pane.getWidth());
+            region.setPrefHeight(this.pane.getHeight());
+        }
+    }
+
+    /**
+     * Enable resize pane view switcher.
+     *
+     * @return the pane view switcher
+     */
+    public PaneViewSwitcher enableResize() {
+        this.resize = true;
+        return this;
     }
 }
