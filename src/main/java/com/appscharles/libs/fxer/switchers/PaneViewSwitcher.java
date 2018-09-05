@@ -37,5 +37,7 @@ public class PaneViewSwitcher {
         this.pane.heightProperty().addListener((args, oldVal, newVal)->{
             region.setPrefHeight(newVal.doubleValue());
         });
+        region.setPrefWidth(this.pane.getWidth());
+        region.setPrefHeight(this.pane.getHeight());
     }
 }
