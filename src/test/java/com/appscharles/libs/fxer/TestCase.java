@@ -2,8 +2,11 @@ package com.appscharles.libs.fxer;
 
 import com.appscharles.libs.logger.configurators.Log4j2Console;
 import com.appscharles.libs.logger.configurators.Log4jConsole;
+import com.sun.javafx.application.PlatformImpl;
 import org.apache.logging.log4j.Level;
 import org.junit.Before;
+import org.junit.Rule;
+import org.junit.rules.TemporaryFolder;
 
 /**
  * IDE Editor: IntelliJ IDEA
@@ -16,8 +19,13 @@ import org.junit.Before;
  */
 public class TestCase {
 
+    @Rule
+    public TemporaryFolder temp = new TemporaryFolder();
+
     @Before
     public void before(){
+        PlatformImpl.startup(()->{});
+        PlatformImpl.setImplicitExit(false);
         new Log4j2Console(Level.TRACE).config();
         new Log4jConsole(org.apache.log4j.Level.INFO).config();
     }
