@@ -105,6 +105,9 @@ public class OnlinePreviewImageBuilder extends AbstractPreviewImage {
                     try {
                         previewImage.set(new Image(String.valueOf(this.imageOnlineRemember.getFile(this.imageUrl).toURI().toURL())));
                         GraphicTooltipSetter.set(tooltip, previewImage.getValue(), this.maxWidth, this.maxHeight, this.preserveRatio);
+                        Image imageThumbnail = new Image(String.valueOf(this.imageOnlineRemember.getFile(this.imageUrl).toURI().toURL()), MaxWidthSizeGetter.get(previewImage.getValue(), this.maxWidthThumbnail), MaxHeightSizeGetter.get(previewImage.getValue(), this.maxHeightThumbnail), this.preserveRatioThumbnail, false);
+                        Rectangle rectangle = ImageRectangleBuilder.create(imageThumbnail, this.roundCornersThumbnail, this.roundCornersThumbnail).build();
+                        label.setGraphic(rectangle);
                     } catch (MalformedURLException e) {
                         logger.error(e, e);
                     }
