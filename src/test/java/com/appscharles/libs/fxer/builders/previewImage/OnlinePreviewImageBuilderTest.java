@@ -30,7 +30,7 @@ public class OnlinePreviewImageBuilderTest extends TestCase {
         File tempDir = this.temp.newFolder();
         URL imageUrl = new URL("https://www.sample-videos.com/img/Sample-jpg-image-1mb.jpg");
         // URL imageUrl = new URL("https://wiki.totalwar.com/images/0/00/Lepidus_icon.png");
-        OnlinePreviewImageBuilder builder = OnlinePreviewImageBuilder.create(imageUrl, 600.0, 100.0).setImageOnlineRemember(new ImageOnlineRemember(tempDir)).setLoadingImageMaxHeight(40.0).setRoundCornersThumbnail(15.0);
+        OnlinePreviewImageBuilder builder = OnlinePreviewImageBuilder.create(imageUrl, 600.0, 100.0).setTitle("title").setLoadingImagePadding(20.0).setImageOnlineRemember(new ImageOnlineRemember(tempDir)).setLoadingImageMaxHeight(40.0).setRoundCornersThumbnail(15.0);
         PlatformImpl.runAndWait(() -> {
             FXStage fxStage = new FXStage(null);
             Scene scene = null;

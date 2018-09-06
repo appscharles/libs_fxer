@@ -3,20 +3,27 @@ package com.appscharles.libs.fxer.builders.previewImage;
 import com.appscharles.libs.fxer.exceptions.FxerException;
 import com.appscharles.libs.fxer.getters.MaxHeightSizeGetter;
 import com.appscharles.libs.fxer.getters.MaxImageGetter;
+import com.appscharles.libs.fxer.getters.MaxImageViewGetter;
 import com.appscharles.libs.fxer.getters.MaxWidthSizeGetter;
 import com.appscharles.libs.fxer.remembers.IImageOnlineRemember;
-import com.appscharles.libs.fxer.setters.DelayTimeToolTipSetter;
-import com.appscharles.libs.fxer.setters.GraphicTooltipSetter;
-import javafx.beans.property.BooleanProperty;
+import com.appscharles.libs.fxer.stages.FXStage;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.ListChangeListener;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Modality;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -55,6 +62,8 @@ public class OnlinePreviewImageBuilder extends AbstractPreviewImage {
      */
     protected Double loadingImageMaxHeight;
 
+    protected Double loadingImagePadding;
+
     /**
      * The Image loading preserve ratio.
      */
@@ -64,6 +73,8 @@ public class OnlinePreviewImageBuilder extends AbstractPreviewImage {
      * The Image online remember.
      */
     protected IImageOnlineRemember imageOnlineRemember;
+
+    protected String title;
 
     /**
      * Create online preview image builder.
@@ -83,6 +94,8 @@ public class OnlinePreviewImageBuilder extends AbstractPreviewImage {
         instance.loadingImageMaxWidth = 900.0;
         instance.loadingImageMaxHeight = 900.0;
         instance.imageLoadingPreserveRatio = true;
+        instance.loadingImagePadding = 0.0;
+        instance.title = "";
         return instance;
     }
 
@@ -94,52 +107,23 @@ public class OnlinePreviewImageBuilder extends AbstractPreviewImage {
      */
     public Parent build() throws FxerException {
         Label label = new Label();
-        BooleanProperty loadingLaunched = new SimpleBooleanProperty(false);
-        Tooltip tooltip = new Tooltip();
-        DelayTimeToolTipSetter.setDelay(this.durationOpen, this.durationVisible, this.durationClose, tooltip);
-        tooltip.activatedProperty().addListener((a, o, n) -> {
-            if (loadingLaunched.getValue() == false && n) {
-                loadingLaunched.setValue(true);
-                ObjectProperty<Image> previewImage = new SimpleObjectProperty<>();
-                if (this.imageOnlineRemember != null && this.imageOnlineRemember.isRemember(this.imageUrl)) {
-                    try {
-                        previewImage.set(new Image(String.valueOf(this.imageOnlineRemember.getFile(this.imageUrl).toURI().toURL())));
-                        GraphicTooltipSetter.set(tooltip, previewImage.getValue(), this.maxWidth, this.maxHeight, this.preserveRatio);
-                        Image imageThumbnail = new Image(String.valueOf(this.imageOnlineRemember.getFile(this.imageUrl).toURI().toURL()), MaxWidthSizeGetter.get(previewImage.getValue(), this.maxWidthThumbnail), MaxHeightSizeGetter.get(previewImage.getValue(), this.maxHeightThumbnail), this.preserveRatioThumbnail, false);
-                        Rectangle rectangle = ImageRectangleBuilder.create(imageThumbnail, this.roundCornersThumbnail, this.roundCornersThumbnail).build();
-                        label.setGraphic(rectangle);
-                    } catch (MalformedURLException e) {
-                        logger.error(e, e);
-                    }
-                } else {
-                    previewImage.setValue(new Image(String.valueOf(this.imageUrl), true));
-                    previewImage.getValue().progressProperty().addListener((args, oldVal, newVal) -> {
-                        if (newVal.doubleValue() >= 1.0) {
-                            GraphicTooltipSetter.set(tooltip, previewImage.getValue(), this.maxWidth, this.maxHeight, this.preserveRatio);
-                            if (this.imageOnlineRemember != null && this.imageOnlineRemember.isRemember(this.imageUrl) == false) {
-                                try {
-                                    tooltip.setOnHiding(event->{
-                                        event.consume();
-                                    });
-                                    this.imageOnlineRemember.save(this.imageUrl, previewImage.getValue());
-                                    Image imageThumbnail = new Image(String.valueOf(this.imageOnlineRemember.getFile(this.imageUrl).toURI().toURL()), MaxWidthSizeGetter.get(previewImage.getValue(), this.maxWidthThumbnail), MaxHeightSizeGetter.get(previewImage.getValue(), this.maxHeightThumbnail), this.preserveRatioThumbnail, false);
-                                    Rectangle rectangle = ImageRectangleBuilder.create(imageThumbnail, this.roundCornersThumbnail, this.roundCornersThumbnail).build();
-                                    label.setGraphic(rectangle);
-                                } catch (MalformedURLException | FxerException e) {
-                                    logger.error(e, e);
-                                }
-                            }
-                        }
-                    });
-                }
+        StackPane imageContainer = new StackPane();
+        ObjectProperty<Image> previewImage = new SimpleObjectProperty<>();
+        if (this.imageOnlineRemember != null && this.imageOnlineRemember.isRemember(this.imageUrl)) {
+            try {
+                previewImage.set(new Image(String.valueOf(this.imageOnlineRemember.getFile(this.imageUrl).toURI().toURL())));
+                Image imageThumbnail = new Image(String.valueOf(this.imageOnlineRemember.getFile(this.imageUrl).toURI().toURL()), MaxWidthSizeGetter.get(previewImage.getValue(), this.maxWidthThumbnail), MaxHeightSizeGetter.get(previewImage.getValue(), this.maxHeightThumbnail), this.preserveRatioThumbnail, false);
+                Rectangle rectangle = ImageRectangleBuilder.create(imageThumbnail, this.roundCornersThumbnail, this.roundCornersThumbnail).build();
+                label.setGraphic(rectangle);
+                imageContainer.getChildren().clear();
+                imageContainer.getChildren().add(new MaxImageViewGetter(previewImage.getValue(), this.maxWidth, this.maxHeight, this.preserveRatio).get());
+            } catch (MalformedURLException e) {
+                logger.error(e, e);
             }
-        });
-
-        Image imageLoading = new MaxImageGetter(this.imageLoadingResource, this.loadingImageMaxWidth, this.loadingImageMaxHeight).setPreserveRatio(this.imageLoadingPreserveRatio).get();
-        tooltip.setGraphic(new ImageView(imageLoading));
+        }
 
         Image imageThumbnail;
-        if (this.imageOnlineRemember != null && this.imageOnlineRemember.isRemember(this.imageUrl)){
+        if (this.imageOnlineRemember != null && this.imageOnlineRemember.isRemember(this.imageUrl)) {
             try {
                 imageThumbnail = new MaxImageGetter(this.imageOnlineRemember.getFile(this.imageUrl).toURI().toURL(), this.maxWidthThumbnail, this.maxHeightThumbnail).setPreserveRatio(this.preserveRatioThumbnail).get();
             } catch (MalformedURLException e) {
@@ -149,8 +133,60 @@ public class OnlinePreviewImageBuilder extends AbstractPreviewImage {
             imageThumbnail = new MaxImageGetter(this.thumbnailImageResource, this.maxWidthThumbnail, this.maxHeightThumbnail).setPreserveRatio(this.preserveRatioThumbnail).get();
         }
         Rectangle rectangle = ImageRectangleBuilder.create(imageThumbnail, this.roundCornersThumbnail, this.roundCornersThumbnail).build();
-        Tooltip.install(label, tooltip);
         label.setGraphic(rectangle);
+        label.setOnMouseClicked(event->{
+            if (this.imageOnlineRemember == null || this.imageOnlineRemember.isRemember(this.imageUrl) == false) {
+                Image imageLoading = new MaxImageGetter(this.imageLoadingResource, this.loadingImageMaxWidth, this.loadingImageMaxHeight).setPreserveRatio(this.imageLoadingPreserveRatio).get();
+                imageContainer.getChildren().clear();
+                StackPane stack = new StackPane();
+                stack.setPadding(new Insets(this.loadingImagePadding));
+                stack.getChildren().add(new ImageView(imageLoading));
+                imageContainer.getChildren().add(stack);
+                previewImage.setValue(new Image(String.valueOf(this.imageUrl), true));
+                previewImage.getValue().progressProperty().addListener((args, oldVal, newVal) -> {
+                    if (newVal.doubleValue() >= 1.0) {
+                        imageContainer.getChildren().clear();
+                        imageContainer.getChildren().add(new MaxImageViewGetter(previewImage.getValue(), this.maxWidth, this.maxHeight, this.preserveRatio).get());
+                        if (this.imageOnlineRemember != null && this.imageOnlineRemember.isRemember(this.imageUrl) == false) {
+                            try {
+                                this.imageOnlineRemember.save(this.imageUrl, previewImage.getValue());
+                                Image newImageThumbnail = new Image(String.valueOf(this.imageOnlineRemember.getFile(this.imageUrl).toURI().toURL()), MaxWidthSizeGetter.get(previewImage.getValue(), this.maxWidthThumbnail), MaxHeightSizeGetter.get(previewImage.getValue(), this.maxHeightThumbnail), this.preserveRatioThumbnail, false);
+                                Rectangle newRectangle = ImageRectangleBuilder.create(newImageThumbnail, this.roundCornersThumbnail, this.roundCornersThumbnail).build();
+                                label.setGraphic(newRectangle);
+                            } catch (MalformedURLException | FxerException e) {
+                                logger.error(e, e);
+                            }
+                        }
+                    }
+                });
+            }
+            FXStage fxStage = new FXStage(null);
+            fxStage.setResizable(false);
+            fxStage.setTitle(this.title);
+            fxStage.getIcons().add(new Image(this.thumbnailImageResource));
+            StackPane stackPane = new StackPane();
+            imageContainer.getChildren().addListener((ListChangeListener.Change<? extends Node> n)->{
+                if (imageContainer.getChildren().size() > 0){
+                    try {
+                        fxStage.sizeToSceneFX();
+                        fxStage.centerOnScreen();
+                    } catch (FxerException e) {
+                        logger.error(e, e);
+                    }
+                }
+            });
+            stackPane.getChildren().add(imageContainer);
+            stackPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+            Scene scene = new Scene(stackPane);
+            fxStage.setScene(scene);
+            try {
+                fxStage.initModality(Modality.APPLICATION_MODAL);
+                fxStage.sizeToSceneFX();
+                fxStage.showAndWaitFX();
+            } catch (FxerException e) {
+                logger.error(e, e);
+            }
+        });
         return label;
     }
 
@@ -217,6 +253,21 @@ public class OnlinePreviewImageBuilder extends AbstractPreviewImage {
      */
     public OnlinePreviewImageBuilder setImageOnlineRemember(IImageOnlineRemember imageOnlineRemember) {
         this.imageOnlineRemember = imageOnlineRemember;
+        return this;
+    }
+
+    /**
+     * Setter for property 'loadingImagePadding'.
+     *
+     * @param loadingImagePadding Value to set for property 'loadingImagePadding'.
+     */
+    public OnlinePreviewImageBuilder setLoadingImagePadding(Double loadingImagePadding) {
+        this.loadingImagePadding = loadingImagePadding;
+        return this;
+    }
+
+    public OnlinePreviewImageBuilder setTitle(String title) {
+        this.title = title;
         return this;
     }
 }
