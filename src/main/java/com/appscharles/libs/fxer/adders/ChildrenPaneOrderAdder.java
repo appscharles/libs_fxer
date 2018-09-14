@@ -22,4 +22,17 @@ public class ChildrenPaneOrderAdder {
             containerPane.getChildren().add(child);
         }
     }
+
+    /**
+     * Add if not contains.
+     *
+     * @param containerPane the container pane
+     * @param child         the child
+     * @param order         the order
+     */
+    public static void addIfNotContains(Pane containerPane, Parent child, Integer order){
+        if (containerPane.getChildren().contains(child) == false) {
+            add(containerPane, child, order);
+        }
+    }
 }
