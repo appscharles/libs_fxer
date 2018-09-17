@@ -1,15 +1,16 @@
 package com.appscharles.libs.fxer.abstracts;
 
-import com.appscharles.apps.stocker.commons.sneakers.ExceptionDialogThrowSneaker;
 import com.appscharles.libs.fxer.controllers.AbstractViewControllerFX;
 import com.appscharles.libs.fxer.exceptions.ThrowingConsumer;
 import com.appscharles.libs.fxer.exceptions.ThrowingOneConsumer;
+import com.appscharles.libs.fxer.sneakers.ExceptionDialogThrowSneaker;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
+
 
 /**
  * The type Abstract view controller fx extend.
