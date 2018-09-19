@@ -1,0 +1,26 @@
+.tree-view {
+    -fx-border-style: none;
+    -fx-background-color:transparent;
+}
+
+.tree-view .tree-cell{
+    -fx-border-style: none;
+    -fx-background-color:transparent;
+    -fx-padding: 0.3em 1em 0.3em 0em;
+}
+
+.tree-view .tree-cell.sub-tree-item{
+    -fx-padding: 0.3em 1em 0.3em 0.3em;
+}
+
+.tree-view .tree-cell .label:hover {
+    -fx-text-fill: #666600;
+}
+
+.tree-cell > .tree-disclosure-node  {
+    -fx-padding: 0.3em 0.7em 0.3em 0.5em;
+}
+
+.tree-cell > .tree-disclosure-node > .arrow  {
+    -fx-background-color: #666600;
+}
