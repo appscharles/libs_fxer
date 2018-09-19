@@ -1,0 +1,8 @@
+.titled-pane > .content > * {
+    -fx-padding: 0px;
+}
+
+.tab .tab-label{
+    -fx-font-size: 9.5pt;
+    -fx-padding: 0em 0.8em 0em 0.6em;
+}

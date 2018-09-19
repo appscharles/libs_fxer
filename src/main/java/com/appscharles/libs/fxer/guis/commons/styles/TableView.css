@@ -1,0 +1,55 @@
+.table-row-cell:selected {
+   -fx-background-color: rgb(174, 186, 98);
+}
+.table-row-cell{
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-column {
+  -fx-alignment: CENTER-LEFT;
+}
+
+.table-column.alignment-center {
+  -fx-alignment: CENTER;
+}
+
+.table-view .column-header .label {
+   -fx-font-size: 9pt;
+   -fx-text-fill: white;
+   -fx-font-family: "Segoe UI";
+   -fx-font-weight: normal;
+}
+
+.table-view .column-header:last-visible {
+  -fx-padding: 0 20 0 0;
+}
+
+.table-view .table-column .menu-item .label {
+    -fx-font-size: 10pt;
+}
+
+.table-view .scroll-bar {
+    -fx-base: rgb(194, 205, 125);
+}
+
+.table-column .button {
+    -fx-font-size: 9pt;
+}
+
+.table-column .menu-button > .label{
+   -fx-text-fill: white;
+   -fx-font-family: "Segoe UI";
+   -fx-font-weight: normal;
+}
+
+.table-column .menu-button {
+    -fx-font-size: 9pt;
+}
+
+.table-column .menu-button {
+    -fx-font-size: 9pt;
+}
+
+.table-column .menu-item .label {
+    -fx-font-size: 10pt;
+}

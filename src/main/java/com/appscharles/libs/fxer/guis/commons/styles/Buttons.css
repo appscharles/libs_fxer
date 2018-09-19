@@ -1,0 +1,18 @@
+.button {
+   -fx-text-fill: white;
+   -fx-font-family: "Segoe UI";
+   -fx-font-weight: normal;
+   -fx-focus-color: transparent;
+}
+
+.button.light_red_theme{
+    -fx-base: rgb(254, 54, 54);
+}
+
+.button.light_silver_theme{
+    -fx-base: rgb(128, 128, 128);
+}
+
+.button.warn_theme{
+    -fx-base: rgb(220, 162, 0);
+}
