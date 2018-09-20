@@ -3,7 +3,10 @@ package com.appscharles.libs.fxer.hidders;
 import com.google.common.collect.Lists;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Window;
+import org.reactfx.value.Val;
 
 import java.util.List;
 
@@ -18,11 +21,14 @@ public class PaneAutoHidder {
      * @param pane the pane
      */
     public static void autoHide(Pane pane){
-        List<Node> assigned = Lists.newArrayList();
-        pane.getChildren().addListener((ListChangeListener<Node>) list->{
-            assign(pane, assigned,  Lists.newArrayList(list.getList()));
+        Val<Boolean> showing = Val.flatMap(pane.sceneProperty(), Scene::windowProperty).flatMap(Window::showingProperty);
+        showing.addListener((args, oldVal, newVal)->{
+            List<Node> assigned = Lists.newArrayList();
+            pane.getChildren().addListener((ListChangeListener<Node>) list->{
+                assign(pane, assigned,  Lists.newArrayList(list.getList()));
+            });
+            assign(pane, assigned, pane.getChildren());
         });
-        assign(pane, assigned, pane.getChildren());
     }
 
     private static void assign(Pane pane, List<Node> assigned, List<Node> list) {
