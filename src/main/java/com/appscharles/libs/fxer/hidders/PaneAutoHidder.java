@@ -21,6 +21,8 @@ public class PaneAutoHidder {
      * @param pane the pane
      */
     public static void autoHide(Pane pane){
+        pane.setVisible(false);
+        pane.setManaged(false);
         Val<Boolean> showing = Val.flatMap(pane.sceneProperty(), Scene::windowProperty).flatMap(Window::showingProperty);
         showing.addListener((args, oldVal, newVal)->{
             List<Node> assigned = Lists.newArrayList();
