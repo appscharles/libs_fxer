@@ -9,15 +9,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 /**
- * IDE Editor: IntelliJ IDEA
- * <p>
- * Date: 19.09.2018
- * Time: 08:48
- * Project name: getter
- *
- * @author Karol Golec karol.itgolo@gmail.com
+ * The type Menu item node factory.
  */
 public class MenuItemNodeFactory implements IMenuItemNodeFactory {
+
+    private Double iconMaxWidth;
+
+    private Double iconMaxHeight;
+
+    /**
+     * Instantiates a new Menu item node factory.
+     */
+    public MenuItemNodeFactory() {
+        this.iconMaxWidth = 15.0;
+        this.iconMaxHeight = 15.0;
+    }
 
     @Override
     public Node create(MenuTreeCellFactory treeCell) {
@@ -28,7 +34,7 @@ public class MenuItemNodeFactory implements IMenuItemNodeFactory {
         hBox.setSpacing(3);
         if (treeCell.getItem().getResourceIcon() != null) {
             // for gimp: 100, 100, -50
-            Image image = new MaxImageGetter(treeCell.getItem().getResourceIcon(), 15.0, 15.0).get();
+            Image image = new MaxImageGetter(treeCell.getItem().getResourceIcon(), this.iconMaxWidth, this.iconMaxHeight).get();
             hBox.getChildren().add(new ImageView(image));
         }
         hBox.getChildren().add(new Label(treeCell.getItem().getText()));
@@ -40,5 +46,18 @@ public class MenuItemNodeFactory implements IMenuItemNodeFactory {
             });
         }
         return hBox;
+    }
+
+    /**
+     * Set icon max size menu item node factory.
+     *
+     * @param width  the width
+     * @param height the height
+     * @return the menu item node factory
+     */
+    public MenuItemNodeFactory setIconMaxSize(Double width, Double height){
+        this.iconMaxWidth = width;
+        this.iconMaxHeight = height;
+        return this;
     }
 }
