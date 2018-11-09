@@ -1,0 +1,6 @@
+.combo-box {
+    -fx-base: rgb(194, 205, 125);
+}
+.combo-box .label {
+    -fx-text-fill: black;
+}
